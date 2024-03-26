@@ -1,8 +1,12 @@
 import readline = require("readline-sync");
-
+import {Conta} from"./src/model/conta"
    export function main(){
     let opcao : number;
-
+    let c1: Conta = new Conta(1, 123,1,"Adriel", 10000000) 
+    c1.visualizar();
+    console.log(c1.sacar(200000000));
+    c1.depositar(100000);
+    c1.visualizar();
     do{
         console.log("**************************************************")
         console.log("                                                  ")
