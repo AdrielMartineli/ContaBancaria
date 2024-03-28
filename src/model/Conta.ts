@@ -1,4 +1,4 @@
-export class Conta{
+export abstract class Conta{
     //atributos da classe Conta;
     private _numero : number;
     private _agencia : number;
@@ -16,95 +16,59 @@ export class Conta{
 	}
     
 
-    /**
-     * Getter numero
-     * @return {number}
-     */
-	public get_numero(): number {
+    
+	public get numero(): number {
 		return this._numero;
 	}
 
-    /**
-     * Getter agencia
-     * @return {number}
-     */
-	public get_agencia(): number {
+   
+	public get agencia(): number {
 		return this._agencia;
 	}
 
-    /**
-     * Getter tipo
-     * @return {number}
-     */
-	public get_tipo(): number {
+   
+	public get tipo(): number {
 		return this._tipo;
 	}
 
-    /**
-     * Getter titular
-     * @return {string}
-     */
-	public get_titular(): string {
+	public get titular(): string {
 		return this._titular;
 	}
 
-    /**
-     * Getter saldo
-     * @return {number}
-     */
-	public get_saldo(): number {
+	public get saldo(): number {
 		return this._saldo;
 	}
 
-    /**
-     * Setter numero
-     * @param {number} value
-     */
-	public set_numero(value: number) {
+	public set numero(value: number) {
 		this._numero = value;
 	}
 
-    /**
-     * Setter agencia
-     * @param {number} value
-     */
-	public set_agencia(value: number) {
+
+	public set agencia(value: number) {
 		this._agencia = value;
 	}
 
-    /**
-     * Setter tipo
-     * @param {number} value
-     */
-	public set_tipo(value: number) {
+	public set tipo(value: number) {
 		this._tipo = value;
 	}
 
-    /**
-     * Setter titular
-     * @param {string} value
-     */
-	public set_titular(value: string) {
+	public set titular(value: string) {
 		this._titular = value;
 	}
 
-    /**
-     * Setter saldo
-     * @param {number} value
-     */
-	public set_saldo(value: number) {
+	public set saldo(value: number) {
 		this._saldo = value;
 	}
     public sacar(valor: number): boolean{
         if(this._saldo>valor){
-            this.set_saldo(this._saldo - valor)
+            this._saldo = this._saldo - valor
             return true;
         }
         console.log("saldo insuficiente;");
         return false;
     }
     public depositar(valor:number):void{
-        this.set_saldo(this._saldo + valor);
+        this._saldo = this._saldo + valor;
     }
     public visualizar(): void{
         let tipo: string ="";
