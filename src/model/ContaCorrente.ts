@@ -1,4 +1,5 @@
-import {Conta} from "./Conta";
+import { Conta } from "./conta";
+
     export class ContaCorrente extends Conta{
         private _limite: number;
 
@@ -24,5 +25,10 @@ import {Conta} from "./Conta";
         }
         console.log("saldo insuficiente;");
         return false;
+    }
+
+     public visualizar(): void {
+        super.visualizar();
+        console.log("Limite: " + this._limite.toFixed(2));    
     }
     }
