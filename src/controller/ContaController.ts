@@ -1,5 +1,6 @@
 import { Conta } from "../model/conta";
 import { ContaRepository } from "../repository/ContaRepository";
+import { colors } from "../util/Cores";
 
 export class ContaController implements ContaRepository{
     private listaContas :Array<Conta> = new Array<Conta>();
@@ -7,7 +8,12 @@ export class ContaController implements ContaRepository{
     numero: number = 0;
     
     procurarPorNumero(numero: number): void {
-        throw new Error("Method not implemented.");
+        let buscaConta = this.buscarNoArray(numero);
+
+        if(buscaConta !== null)
+            buscaConta.visualizar();
+        else
+        console.log("\nConta não foi Encontrada!");
     }
     listarTodas(): void {
        for(let conta of this.listaContas){
@@ -16,15 +22,27 @@ export class ContaController implements ContaRepository{
     }
     cadastrar(conta: Conta): void {
         this.listaContas.push(conta);
-        console.log("A Conta foi adicionada!");
+        console.log(colors.fg.blue, "\nA Conta numero " + conta.numero+
+                     " Foi criada com sucesso!", colors.reset);
     }
     atualizar(conta: Conta): void {
-        throw new Error("Method not implemented.");
+        let buscaConta = this.buscarNoArray(conta.numero);
+        if(buscaConta!== null){
+            this.listaContas[this.listaContas.indexOf(buscaConta)]=conta;
+            console.log(`A conta número ${conta.numero} foi atualizada com exito!`)
+        }else
+        console.log("\nConta não foi encontrada")
     }
     deletar(numero: number): void {
-        throw new Error("Method not implemented.");
+        let buscaConta = this.buscarNoArray(numero);
+        if(buscaConta!= null){
+            this.listaContas.splice(this.listaContas.indexOf(buscaConta),1);
+            console.log(colors.fg.red, "\nA conta numero: " +
+            numero + " foi apagada com sucesso", colors.reset);
+        }else
+        console.log(colors.fg.gray,"\nA Conta numero: "+ numero + "não foi encontrada!", colors.reset)
     }
-    sacar(nuero: number, valor: number): void {
+    sacar(numero: number, valor: number): void {
         throw new Error("Method not implemented.");
     }
     depositar(numero: number, valor: number): void {
@@ -34,4 +52,15 @@ export class ContaController implements ContaRepository{
         throw new Error("Method not implemented.");
     }
 
+    public gerarNumero() : number{
+        return ++ this.numero;
+    }
+    public buscarNoArray(numero:number): Conta | null{
+        for(let conta of this.listaContas){
+            if(conta.numero === numero){
+                return conta;
+            }
+           } 
+           return null;
+    }
 }
