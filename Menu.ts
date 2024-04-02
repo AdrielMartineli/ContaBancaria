@@ -8,7 +8,7 @@ import { read } from "fs";
    export function main(){
    let contas: ContaController = new ContaController;
    
-    let opcao, numero, agencia, tipo, saldo, limite, aniversario:number;
+    let opcao, numero, agencia, tipo, saldo, limite, aniversario, valor, numeroDestino:number;
     let titular: string;
     const tipoContas = ['Conta Corrente' , 'Conta Poupanca'];
 
@@ -36,7 +36,8 @@ import { read } from "fs";
         console.log("         6 - Sacar                                ")
         console.log("         7 - Depositar                            ")
         console.log("         8 - Transferir valores entre Contas      ")
-        console.log("         9 - Sair                                 ")
+        console.log("         9 - Buscar conta por Titular             ")
+        console.log("         0 - Sair                                 ")
         console.log("                                                  ")
         console.log("**************************************************")
         console.log("                                                  ")
@@ -44,13 +45,13 @@ import { read } from "fs";
                     colors.reset);
         opcao = readline.questionInt("");
 
-        if(opcao>9 || opcao<1){
+        if(opcao>9 || opcao<0){
             console.log(colors.fg.greenstrong,
-                "Digite um numero entre 1 e 9!!")
+                "Digite um numero entre 0 e 9!!")
                 console.log(colors.reset,"");
                 keyPress() 
         }
-            if(opcao == 9 ){
+            if(opcao == 0 ){
                 console.log(colors.fg.greenstrong,
                     "\nBanco do Brazil com Z - O seu futuro começa aqui!!");
                 console.log(colors.reset,"");
@@ -146,15 +147,44 @@ import { read } from "fs";
                 break;
             case 6:
                 console.log("\n Opcao 6 - Sacar");
+                console.log("Digite o numero da conta: ");
+                numero = readline.questionInt("");
+                console.log("Digite o valor do Saque: ")
+                valor = readline.questionFloat("")
+
+                contas.sacar(numero, valor);
+
+                1
                 keyPress()
                 break;
             case 7:
                 console.log("\n Opcao 7 - Depositar");
+                console.log("Digite o numero da conta: ");
+                numero = readline.questionInt("");
+                console.log("Digite o valor do Deposito ")
+                valor = readline.questionFloat("")
+
+                contas.depositar(numero, valor);
                 keyPress()
                 break;
             case 8:
                 console.log("\n Opcao 8 - Transferir valores entre Contas");
+                console.log("Digite o numero da conta de Origem: ");
+                numero = readline.questionInt("");
+                console.log("Digite o numero da conta de Destino: ");
+                numeroDestino = readline.questionInt("");
+                console.log("Digite o valor do Deposito ")
+                valor = readline.questionFloat("")
+                contas.transferir(numero, numeroDestino, valor);
                 keyPress()
+                break;
+            case 9:
+                console.log("\n Opcao 9 - Consultar conta por Titular");
+                console.log("Digite o Nome do titular: ");
+                titular = readline.question("");
+
+                contas.procurarPorTitular(titular);
+                keyPress();
                 break;
         }
     }

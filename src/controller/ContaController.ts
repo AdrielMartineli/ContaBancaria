@@ -3,6 +3,13 @@ import { ContaRepository } from "../repository/ContaRepository";
 import { colors } from "../util/Cores";
 
 export class ContaController implements ContaRepository{
+    procurarPorTitular(titular: string) {
+       let listaContasPorTitular = this.listaContas.filter(c =>
+            c.titular.toUpperCase().includes(titular.toUpperCase()))
+       for( let conta of listaContasPorTitular){
+        conta.visualizar();
+       } 
+    }
     private listaContas :Array<Conta> = new Array<Conta>();
 
     numero: number = 0;
@@ -43,13 +50,33 @@ export class ContaController implements ContaRepository{
         console.log(colors.fg.gray,"\nA Conta numero: "+ numero + "não foi encontrada!", colors.reset)
     }
     sacar(numero: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let buscaConta = this.buscarNoArray(numero);
+        if(buscaConta!= null){
+            if(buscaConta.sacar(valor)=== true)
+                console.log(`O saque na Conta numero ${numero} foi efetuado com exito!!`);
+        }else
+        console.log(colors.fg.gray,"\nA Conta numero: "+ numero + "não foi encontrada!", colors.reset)
     }
     depositar(numero: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let buscaConta = this.buscarNoArray(numero);
+        if(buscaConta!= null){
+                buscaConta.depositar(valor);    
+                console.log(`O deposito na Conta numero ${numero} foi efetuado com exito!!`);
+        }else
+        console.log(colors.fg.gray,"\nA Conta numero: "+ numero + "não foi encontrada!", colors.reset)
     }
     transferir(numeroOrigem: number, numeroDestino: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let contaOrigem = this.buscarNoArray(numeroOrigem)
+        let contaDestino = this.buscarNoArray(numeroDestino)
+        if(contaOrigem !== null && contaDestino !== null){
+            if(contaOrigem.sacar(valor)=== true){
+                contaDestino.depositar(valor)
+                console.log(`O deposito na Conta numero ${numeroOrigem} para a conta${numeroDestino}
+                foi efetuado com exito!!`);
+            }
+                
+        }else
+        console.log(colors.fg.gray,"\nA Conta numero: "+ numeroOrigem + "não foi encontrada!", colors.reset)
     }
 
     public gerarNumero() : number{
